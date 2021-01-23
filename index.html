@@ -116,9 +116,11 @@
             <p class="card-text"><b>Total Memory Access Time:</b> Sample</p>
             <p class="card-text"><b>Snapshot of Cache Memory:</b> Sample</p> -->
           </div>
-          <div class="form-group text-center p-3">
+
+          <!-- <div class="form-group text-center p-3">
             <button type="button" class="btn btn-success" onclick="download()">SAVE AS .TXT FILE</button>
-          </div>
+          </div> -->
+          <div class="output-button"></div>
         </div>
       </div>
     </div>
@@ -150,9 +152,11 @@
   // Input submit
   function submit() {
     alert("Insert calculations here.");
+
     $(".output-body").empty();
-    // $(".output-body").append('<h5 class="card-title">Show output here.</h5> <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>')
+    $(".output-button").empty();
     $(".output-body").append('<p class="card-text"><b>Number of Cache Hits:</b> Sample</p> <p class="card-text"><b>Number of Cache Miss:</b> Sample</p> <p class="card-text"><b>Miss Penalty:</b> Sample</p> <p class="card-text"><b>Average Memory Access Time:</b> Sample</p> <p class="card-text"><b>Total Memory Access Time:</b> Sample</p> <p class="card-text"><b>Snapshot of Cache Memory:</b> Sample</p>')
+    $(".output-button").append('<div class="form-group text-center p-3"> <button type="button" class="btn btn-success" onclick="download()">SAVE AS .TXT FILE</button> </div>');
   }
 
   // Download text file
