@@ -53,6 +53,7 @@
     transition: opacity 1s;
     -webkit-transition: opacity 1;
   }
+
   #cacheSim {
     width: 50% !important;
     margin: auto;
@@ -77,7 +78,7 @@
 
     <div class="row">
       <div class="col">
-        <div class="card border-info mb-3 shadow-sm" style="max-width: 100%;">
+        <div class="card border-info mb-3 shadow-sm input-card" style="max-width: 100%; ">
           <div class="card-header text-info"><b>Input</b></div>
           <div class="card-body text-info">
             <form class="needs-validation" novalidate>
@@ -216,7 +217,7 @@
 
     <div class="row">
       <div class="col">
-        <div class="card border-warning mb-3 shadow-sm" style="max-width: 100%;">
+        <div class="card border-warning mb-3 shadow-sm simulation-card" style="max-width: 100%;">
           <div class="card-header text-warning "><b>Simulation</b></div>
           <div class="card-body text-warning simulation-body" id="simulation-body" hidden>
             <div class="row">
@@ -224,7 +225,7 @@
               <div class="col-10">
                 <h1>Input</h1>
                 <div class="row inputrow" id="inputSimulation">
-                  
+
                 </div>
               </div>
             </div>
@@ -253,7 +254,7 @@
 
     <div class="row">
       <div class="col">
-        <div class="card border-success mb-3 shadow-sm" style="max-width: 100%;">
+        <div class="card border-success mb-3 shadow-sm output-card" style="max-width: 100%;">
           <div class="card-header text-success "><b>Output</b></div>
           <div class="card-body text-success output-body" id="output-body">
             <!-- <p class="card-text"><b>Number of Cache Hits:</b> Sample</p>
@@ -271,11 +272,20 @@
         </div>
       </div>
     </div>
+
+    <div class="row text-center p-4 retry-button">
+      <div class="col">
+        <button type="button" class="btn btn-success" onclick="retry()"><i class="fas fa-undo-alt"></i> RETRY</button>
+      </div>
+    </div>
 </body>
 
 <script>
   $(document).ready(function () {
     $("body").fadeIn();
+    $(".output-card").hide();
+    $(".simulation-card").hide();
+    $(".retry-button").hide();
   });
 
   // Form validator
@@ -307,8 +317,13 @@
     var mmsize = $("#input_mmsize").val();
     var cachesize = $("#input_cmsize").val();
 
-
     alert("Insert calculations here.");
+
+    // Hide input card
+    $(".input-card").hide();
+    $(".output-card").show();
+    $(".simulation-card").show();
+    $(".retry-button").show();
 
     // For clearing and appending div contents
     $(".output-body").empty();
@@ -317,6 +332,23 @@
     // $(".simulation-body").append('<p class="card-text">Insert simulation here</p>');
     $(".output-body").append('<p class="card-text"><b>Number of Cache Hits:</b> Sample</p> <p class="card-text"><b>Number of Cache Miss:</b> Sample</p> <p class="card-text"><b>Miss Penalty:</b> Sample</p> <p class="card-text"><b>Average Memory Access Time:</b> Sample</p> <p class="card-text"><b>Total Memory Access Time:</b> Sample</p> <p class="card-text"><b>Snapshot of Cache Memory:</b> Sample</p>')
     $(".output-button").append('<div class="form-group text-center p-3"> <button type="button" class="btn btn-success" onclick="download()">SAVE AS .TXT FILE</button> </div>');
+  }
+
+  // Retry button
+  function retry() {
+    $(".simulation-body").empty();
+    $(".output-body").empty();
+    $(".output-button").empty();
+
+    $("#input_blocksize").val('');
+    $("#input_mmsize").val('');
+    $("#input_cmsize").val('');
+    $("#input_numarray").val('');
+
+    $(".input-card").show();
+    $(".retry-button").hide();
+    $(".output-card").hide();
+    $(".simulation-card").hide();
   }
 
   // Download text file
