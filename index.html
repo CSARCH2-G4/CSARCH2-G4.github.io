@@ -113,8 +113,20 @@
                   Please enter a cache memory size.
                 </div>
               </div>
+              <div class="form-group">
+                <label for="input_numarray">Number Array (for simulation)</label>
+                <input type="text" class="form-control" id="input_numarray" placeholder="Enter an array of numbers"
+                  required>
+                <small id="input_numarray" class="form-text text-muted">Ex. "10,12,9,21"</small>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Please enter an array of numbers.
+                </div>
+              </div>
               <div class="form-group text-center pt-3">
-                <button  type="submit" class="btn btn-info" id="submitbtn">SUBMIT</button>
+                <button type="submit" class="btn btn-info" id="submitbtn">SUBMIT</button>
               </div>
             </form>
           </div>
@@ -147,13 +159,13 @@
                       <th scope="col">Data</th>
                     </tr>
                   </thead>
-                  <tbody id="simulationTable">    
+                  <tbody id="simulationTable">
                   </tbody>
                 </table>
               </div>
               <div class="col-1"></div>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -214,6 +226,9 @@
     var blocksize = $("#input_blocksize").val();
     var mmsize = $("#input_mmsize").val();
     var cachesize = $("#input_cmsize").val();
+
+
+    alert("Insert calculations here.");
 
     // For clearing and appending div contents
     $(".output-body").empty();
