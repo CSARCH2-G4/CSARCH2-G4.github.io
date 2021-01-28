@@ -53,8 +53,17 @@
     transition: opacity 1s;
     -webkit-transition: opacity 1;
   }
+  #cacheSim {
+    width: 50% !important;
+    margin: auto;
+  }
 
-
+  .inputrow {
+    background-color: rgb(51, 52, 56);
+    color: white;
+    padding: 10px;
+    margin: 10px;
+  }
 </style>
 
 <body onload="document.body.style.opacity='1'">
@@ -73,16 +82,16 @@
           <div class="card-body text-info">
             <form class="needs-validation" novalidate>
 
-              <div class="form-group">
+              <div class="form-group" id="viewform">
                 <p>View input as</p>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                  <input class="form-check-input" type="radio" value="block" name="flexRadioDefault" id="flexRadioDefault1">
                   <label class="form-check-label text-muted" for="flexRadioDefault1">
                     Block
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                  <input class="form-check-input" type="radio" value="address" name="flexRadioDefault" id="flexRadioDefault2" checked>
                   <label class="form-check-label text-muted" for="flexRadioDefault2">
                     Address
                   </label>
@@ -92,7 +101,7 @@
 
               <div class="form-group">
                 <label for="input_blocksize">Block Size</label>
-                <input type="number" class="form-control" id="input_blocksize" placeholder="Enter block size" required>
+                <input type="number"  min="1" class="form-control" id="input_blocksize" placeholder="Enter block size" required>
                 <div class="valid-feedback">
                   Looks good!
                 </div>
@@ -103,7 +112,7 @@
 
               <div class="form-group">
                 <label for="input_mmsize">MM Memory Size</label>
-                <input type="number" class="form-control" id="input_mmsize" placeholder="Enter MM memory size" required>
+                <input type="number" min="1" class="form-control" id="input_mmsize" placeholder="Enter MM memory size" required>
                 <small id="input_mmsize" class="form-text text-muted">Either blocks or words.</small>
                 <div class="valid-feedback">
                   Looks good!
@@ -115,7 +124,7 @@
 
               <div class="form-group">
                 <label for="input_cmsize">Cache Memory Size</label>
-                <input type="number" class="form-control" id="input_cmsize" placeholder="Enter cache memory size"
+                <input type="number" min="1" class="form-control" id="input_cmsize" placeholder="Enter cache memory size"
                   required>
                 <small id="input_cmsize" class="form-text text-muted">Either blocks or words.</small>
                 <div class="valid-feedback">
@@ -128,7 +137,7 @@
 
               <div class="form-group">
                 <label for="input_memaccesstime">Memory Access Time</label>
-                <input type="number" class="form-control" id="input_memaccesstime" placeholder="Enter the time taken to access main memory"
+                <input type="number" min="0" class="form-control" id="input_memaccesstime" placeholder="Enter the time taken to access main memory"
                   required>
                 <small id="input_cmsize" class="form-text text-muted">Unit in seconds.</small>
                 <div class="valid-feedback">
@@ -141,7 +150,7 @@
 
               <div class="form-group">
                 <label for="input_cacheaccesstime">Cache Access Time</label>
-                <input type="number" class="form-control" id="input_cacheaccesstime" placeholder="Enter the time taken to access cache memory"
+                <input type="number" min="0"  class="form-control" id="input_cacheaccesstime" placeholder="Enter the time taken to access cache memory"
                   required>
                 <small id="input_cmsize" class="form-text text-muted">Unit in seconds.</small>
                 <div class="valid-feedback">
@@ -214,32 +223,29 @@
               <div class="col-1"></div>
               <div class="col-10">
                 <h1>Input</h1>
-                <table class="table">
-                  <thead class="thead-dark">
-                    <tr id="inputSimulation">
-                    </tr>
-                  </thead>
-                </table>
+                <div class="row inputrow" id="inputSimulation">
+                  
+                </div>
               </div>
             </div>
             <div class="row">
               <div class="col-1"></div>
               <div class="col-10">
-                <h1 id="cacheSim">Cache Memory</h1>
-                <table class="table">
+                <h1>Cache Memory</h1>
+                <table class="table" id="cacheSim">
                   <thead class="thead-dark">
                     <tr>
                       <th scope="col">Block Number</th>
                       <th scope="col">Data</th>
                     </tr>
                   </thead>
-                  <tbody id="simulationTable">    
+                  <tbody id="simulationTable">
                   </tbody>
                 </table>
               </div>
               <div class="col-1"></div>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -300,6 +306,9 @@
     var blocksize = $("#input_blocksize").val();
     var mmsize = $("#input_mmsize").val();
     var cachesize = $("#input_cmsize").val();
+
+
+    alert("Insert calculations here.");
 
     // For clearing and appending div contents
     $(".output-body").empty();
