@@ -137,7 +137,7 @@
 
     <div class="row">
       <div class="col">
-        <div class="card border-warning mb-3 shadow-sm" style="max-width: 100%;">
+        <div class="card border-warning mb-3 shadow-sm simulation-card" style="max-width: 100%;">
           <div class="card-header text-warning "><b>Simulation</b></div>
           <div class="card-body text-warning simulation-body" id="simulation-body" hidden>
             <div class="row">
@@ -174,7 +174,7 @@
 
     <div class="row">
       <div class="col">
-        <div class="card border-success mb-3 shadow-sm" style="max-width: 100%;">
+        <div class="card border-success mb-3 shadow-sm output-card" style="max-width: 100%;">
           <div class="card-header text-success "><b>Output</b></div>
           <div class="card-body text-success output-body" id="output-body">
             <!-- <p class="card-text"><b>Number of Cache Hits:</b> Sample</p>
@@ -203,6 +203,8 @@
 <script>
   $(document).ready(function () {
     $("body").fadeIn();
+    $(".output-card").hide();
+    $(".simulation-card").hide();
     $(".retry-button").hide();
   });
 
@@ -235,11 +237,12 @@
     var mmsize = $("#input_mmsize").val();
     var cachesize = $("#input_cmsize").val();
 
-
     alert("Insert calculations here.");
 
     // Hide input card
     $(".input-card").hide();
+    $(".output-card").show();
+    $(".simulation-card").show();
     $(".retry-button").show();
 
     // For clearing and appending div contents
@@ -264,6 +267,8 @@
 
     $(".input-card").show();
     $(".retry-button").hide();
+    $(".output-card").hide();
+    $(".simulation-card").hide();
   }
 
   // Download text file
