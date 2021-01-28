@@ -296,7 +296,7 @@ function simulate (viewAs, blockSize, mainMemorySize, cacheMemorySize, mainMemor
         cache[blockMap] = blockNum;
         cacheSnapshot.push([...cache]);
     });
-    // console.log(cacheSnapshot)
+    console.log(cacheSnapshot)
 
     aveAccessTime = ( cacheHit / (cacheHit + cacheMiss) ) * cacheAccessTime +
                     ( cacheMiss / (cacheHit + cacheMiss) ) * missPenalty;
