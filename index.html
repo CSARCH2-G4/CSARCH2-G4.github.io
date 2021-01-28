@@ -31,6 +31,9 @@
 
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/a2bb66671d.js" crossorigin="anonymous"></script>
+
+  <!-- Script for simulation -->
+  <script src="simulateDirectCache.js"></script>
 </head>
 
 <style>
@@ -52,7 +55,7 @@
 </style>
 
 <body onload="document.body.style.opacity='1'">
-  <div class="container-fluid px-4 pb-2">
+  <div class="container px-4 pb-2">
     <div class="row pt-4 pb-3">
       <div class="col">
         <h1 class="text-success">Direct Cache Simulator</h1>
@@ -175,6 +178,7 @@
     var mmsize = $("#input_mmsize").val();
     var cachesize = $("#input_cmsize").val();
 
+    
     alert("Insert calculations here.");
 
     // For clearing and appending div contents
