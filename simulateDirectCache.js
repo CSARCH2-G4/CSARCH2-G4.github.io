@@ -8,32 +8,71 @@ $(document).ready(function() {
 
         // Get value fromt textbox
         var stringSequence = $("#input_mainMemoryMap").val();
-        // Separate each using comma
-        var arraySequence = stringSequence.split(",");
-        // Trim white spaces
-        var noSpace = $.map(arraySequence, $.trim);
+        if(stringSequence.trim() != "") {
 
+            // Valid Inputs
+            $("#input_mainMemoryMap").removeClass("is-invalid");
+            $("#input_mainMemoryMap").addClass("is-valid");
+        
+            // Separate each using comma
+            var arraySequence = stringSequence.split(",");
+            // Trim white spaces
+            var noSpace = $.map(arraySequence, $.trim);
 
-        var integerSequence = noSpace.map(function(x) {
-            return parseInt(x, 10);
-        });
+            
+            var integerSequence = noSpace.map(function(x) {
+                return parseInt(x, 10);
+            });
 
-        // Get multiplier
-        var multiplier = parseInt($("#input_mainMemoryMult").val());
+            // Check per element validity
+            var elementsAreValid = true;
+            for(var i = 0; i < integerSequence.length; i++) {
+                console.log(isNaN(integerSequence[i]))
+                if(elementsAreValid) {
+                    if(!isNaN(integerSequence[i])){
+                        elementsAreValid = true;
+                    }
+                    else {
+                        elementsAreValid = false;
+                    }
+                }
+            }
 
-        // Add to sequence
-        for(var i = 0; i < multiplier; i++) {
-            sequence = sequence.concat(integerSequence);
+            if(elementsAreValid) {
+                // Get multiplier
+                var multiplier = parseInt($("#input_mainMemoryMult").val());
+                if (multiplier > 0) {
+                    // Remove error messages
+                    $("#input_mainMemoryMult").removeClass("is-invalid");
+
+                    // Add to sequence
+                    for (var i = 0; i < multiplier; i++) {
+                        sequence = sequence.concat(integerSequence);
+                    }
+
+                    // Add to table 
+                    $("#sequenceBody").empty();
+                    for (var i = 0; i < sequence.length; i++) {
+                        var row = "<tr> <td>" + i + "</td>" + "<td> " + sequence[i] + "</td> </tr>"
+                        $("#sequenceBody").append(row);
+                    }
+                }
+                else {
+                    $("#input_mainMemoryMult").removeClass("is-valid");
+                    $("#input_mainMemoryMult").addClass("is-invalid");
+                }
+            }
+            else {
+                $("#input_mainMemoryMap").removeClass("is-valid");
+                $("#input_mainMemoryMap").addClass("is-invalid");
+            } 
+
         }
-
-
-        // Add to table
-        $("#sequenceBody").empty();
-        for(var i = 0; i < sequence.length; i++){
-            var row = "<tr> <td>" + i + "</td>" + "<td> "+ sequence[i] + "</td> </tr>"
-            $("#sequenceBody").append(row);
+        else {
+            $("#input_mainMemoryMap").removeClass("is-valid");
+            $("#input_mainMemoryMap").addClass("is-invalid");
         }
-
+        
         console.log(sequence);
     });
 
