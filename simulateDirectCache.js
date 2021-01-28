@@ -1,3 +1,55 @@
+$(document).ready(function() {
+
+    var viewAs, bloc2kSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime
+    // Value Sequence Builder
+    var sequence = [];
+    $("#addValues").click(function() {
+        // Get value fromt textbox
+        var stringSequence = $("#input_mainMemoryMap").val();
+        // Separate each using comma
+        var arraySequence = stringSequence.split(",");
+        // Trim white spaces
+        var noSpace = $.map(arraySequence, $.trim);
+        var integerSequence = noSpace.map(function(x) {
+            return parseInt(x, 10);
+        });
+
+        // Get multiplier
+        var multiplier = parseInt($("#input_mainMemoryMult").val());
+        
+        // Add to sequence
+        for(var i = 0; i < multiplier; i++) {
+            sequence = sequence.concat(integerSequence);
+        }
+
+  
+        // Add to table 
+        $("#sequenceBody").empty();
+        for(var i = 0; i < sequence.length; i++){
+            var row = "<tr> <td>" + i + "</td>" + "<td> "+ sequence[i] + "</td> </tr>"
+            $("#sequenceBody").append(row);
+        }
+
+        console.log(sequence);
+    });
+
+    $("submitInputs").click(function() {
+        
+    });
+    
+
+
+
+
+
+
+
+
+    
+});
+
+
+
 function convertToBlock(blockSize, mainMemorySize, cacheMemorySize, mainMemoryMap) {
     const w = Math.log2(blockSize);
     const k = Math.log2(cacheMemorySize);
@@ -11,7 +63,7 @@ function convertToBlock(blockSize, mainMemorySize, cacheMemorySize, mainMemoryMa
 /**
  * Simulates the cache mapping function
  * @param {String} viewAs Either as 'address' or as 'block'
- * @param {Number} blockSize Integer power of 2 that represents block size in words
+ * @param {Number} bloc2kSize Integer power of 2 that represents block size in words
  * @param {Number} mainMemorySize Integer power of 2 that represents the size of a memory block in bits
  * @param {Number} cacheMemorySize Integer power of 2 that represents the cache size in words
  * @param {Array} mainMemoryMap Array of integers that represent the blocks or addresses to be mapped

@@ -28,6 +28,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+    
 
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/a2bb66671d.js" crossorigin="anonymous"></script>
@@ -52,6 +53,8 @@
     transition: opacity 1s;
     -webkit-transition: opacity 1;
   }
+
+
 </style>
 
 <body onload="document.body.style.opacity='1'">
@@ -69,6 +72,24 @@
           <div class="card-header text-info"><b>Input</b></div>
           <div class="card-body text-info">
             <form class="needs-validation" novalidate>
+
+              <div class="form-group">
+                <p>View input as</p>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                  <label class="form-check-label text-muted" for="flexRadioDefault1">
+                    Block
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                  <label class="form-check-label text-muted" for="flexRadioDefault2">
+                    Address
+                  </label>
+                </div>
+              </div>
+
+
               <div class="form-group">
                 <label for="input_blocksize">Block Size</label>
                 <input type="number" class="form-control" id="input_blocksize" placeholder="Enter block size" required>
@@ -79,6 +100,7 @@
                   Please enter a block size.
                 </div>
               </div>
+
               <div class="form-group">
                 <label for="input_mmsize">MM Memory Size</label>
                 <input type="number" class="form-control" id="input_mmsize" placeholder="Enter MM memory size" required>
@@ -90,6 +112,7 @@
                   Please enter a main memory size.
                 </div>
               </div>
+
               <div class="form-group">
                 <label for="input_cmsize">Cache Memory Size</label>
                 <input type="number" class="form-control" id="input_cmsize" placeholder="Enter cache memory size"
@@ -102,8 +125,79 @@
                   Please enter a cache memory size.
                 </div>
               </div>
+
+              <div class="form-group">
+                <label for="input_memaccesstime">Memory Access Time</label>
+                <input type="number" class="form-control" id="input_memaccesstime" placeholder="Enter the time taken to access main memory"
+                  required>
+                <small id="input_cmsize" class="form-text text-muted">Unit in seconds.</small>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Please enter a memory access time value.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="input_cacheaccesstime">Cache Access Time</label>
+                <input type="number" class="form-control" id="input_cacheaccesstime" placeholder="Enter the time taken to access cache memory"
+                  required>
+                <small id="input_cmsize" class="form-text text-muted">Unit in seconds.</small>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Please enter a memory access time value.
+                </div>
+              </div>
+
+              <br>
+
+              <div class="form-group ">
+                <label for="input_mainMemoryMap">Main Memory Values</label>
+                <input type="text" class="form-control" id="input_mainMemoryMap"
+                  placeholder="Enter a string of integers to add to memory" required>
+                <small id="input_cmsize" class="form-text text-muted">Value sequence separated with commas.</small>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Values are separated with commas.
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="number" value="1" class="form-control" id="input_mainMemoryMult"
+                  placeholder="Enter the number of times to add the sequence" required>
+                <!-- <small id="input_cmsize" class="form-text text-muted">Value sequence separated with commas.</small> -->
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Values are separated with commas.
+                </div>
+              </div>
+              <div class="form-group">
+                <button type="button" class="btn btn-success" id="addValues">Add Values</button>
+              </div>
+             
+              
+              <div class="form-group">
+                <table class="table teable-sm table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Index</th>
+                      <th scope="col">Value</th>
+                    </tr>
+
+                    <tbody id="sequenceBody">
+
+                    </tbody>
+                  </thead>
+                </table>
+              </div>
               <div class="form-group text-center pt-3">
-                <button type="submit" class="btn btn-info">SUBMIT</button>
+                <button type="submit" class="btn btn-info" id="submitInputs">SUBMIT</button>
               </div>
             </form>
           </div>
