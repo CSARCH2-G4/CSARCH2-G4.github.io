@@ -4,16 +4,20 @@ $(document).ready(function() {
     // Value Sequence Builder
     var sequence = [];
     $("#addValues").click(function() {
+        viewAs = $('input[name=flexRadioDefault]:checked', '#viewform').val();
+
         // Get value fromt textbox
         var stringSequence = $("#input_mainMemoryMap").val();
         // Separate each using comma
         var arraySequence = stringSequence.split(",");
         // Trim white spaces
         var noSpace = $.map(arraySequence, $.trim);
+
+        
         var integerSequence = noSpace.map(function(x) {
             return parseInt(x, 10);
         });
-
+        
         // Get multiplier
         var multiplier = parseInt($("#input_mainMemoryMult").val());
         
@@ -33,29 +37,122 @@ $(document).ready(function() {
         console.log(sequence);
     });
 
-    $("submitInputs").click(function() {
+    $("#submitInputs").click(function() {
         
-    });
+       
+        viewAs = $('input[name=flexRadioDefault]:checked', '#viewform').val();
+        block2kSize = parseInt($("#input_blocksize").val());
+        mainMemorySize = parseInt($("#input_mmsize").val());
+        cacheMemorySize = parseInt($("#input_cmsize").val());
+        mainMemoryMap = sequence;
+        memAccessTime = parseFloat($("#input_memaccesstime").val());
+        cacheAccessTime = parseFloat($("#input_cacheaccesstime").val());
+        
+        
     
+        // Validation
+        var validBlock2kSize = powerOfTwo(block2kSize);
+        var validmainMemorySize = powerOfTwo(mainMemorySize);
+        var validcacheMemorySize = powerOfTwo(cacheMemorySize);
+        var validmemAccessTime  = checkPositive(memAccessTime);
+        var validcacheAccessTime = checkPositive(cacheAccessTime);
+        var validAll = validBlock2kSize && validmainMemorySize && validcacheMemorySize && validmemAccessTime && validcacheAccessTime;
+        
+        console.log(validBlock2kSize + " " + validmainMemorySize + " " + validcacheMemorySize + " " + validmemAccessTime + " " + validcacheAccessTime + " ")
+        
+        // Block Size Validation
+        if(validBlock2kSize) {
+            $("#input_blocksize").removeClass("is-invalid");
+            $("#input_blocksize").addClass("is-valid");
+        }
+        else {
+            $("#input_blocksize").addClass("is-invalid");
+            $("#input_blocksize").removeClass("is-valid");
+        }
 
+        // Main Memory Size Validation
+        if(validmainMemorySize) {
+            $("#input_mmsize").removeClass("is-invalid");
+            $("#input_mmsize").addClass("is-valid");
+        }
+        else {
+            $("#input_mmsize").addClass("is-invalid");
+            $("#input_mmsize").removeClass("is-valid");
+        }
 
+         // Cache Memory Size Validation
+         if(validcacheMemorySize) {
+            $("#input_cmsize").removeClass("is-invalid");
+            $("#input_cmsize").addClass("is-valid");
+        }
+        else {
+            $("#input_cmsize").addClass("is-invalid");
+            $("#input_cmsize").removeClass("is-valid");
+        }
 
+         // Memory Access Time Validation
+         if(validmemAccessTime) {
+            $("#input_memaccesstime").removeClass("is-invalid");
+            $("#input_memaccesstime").addClass("is-valid");
+        }
+        else {
+            $("#input_memaccesstime").addClass("is-invalid");
+            $("#input_memaccesstime").removeClass("is-valid");
+        }
 
+         // Memory Access Time Validation
+         if(validcacheAccessTime) {
+            $("#input_cacheaccesstime").removeClass("is-invalid");
+            $("#input_cacheaccesstime").addClass("is-valid");
+        }
+        else {
+            $("#input_cacheaccesstime").addClass("is-invalid");
+            $("#input_cacheaccesstime").removeClass("is-valid");
+        }
 
+        if(validAll) {
+            // Run simulation here
+        }
+        else {
+            alert("Please fix the errors indicated.");
+        }
 
+    });
 
+    function checkPositive(value) {
+        return value > 0;
+    }
 
+    function powerOfTwo(x) {
+        return (Math.log(x)/Math.log(2)) % 1 === 0;
+    }
     
 });
 
+// console.log(convertToBlock( 4, 64, 4, [111, 110011,11001001]));
 
 
 function convertToBlock(blockSize, mainMemorySize, cacheMemorySize, mainMemoryMap) {
     const w = Math.log2(blockSize);
     const k = Math.log2(cacheMemorySize);
+
     const tag = mainMemorySize - w - k;
 
     // TODO: Do conversion function
+    for(var i = 0; i < mainMemoryMap.length; i++){
+        var stringBinary = mainMemoryMap[i].toString();
+        var removeWord = stringBinary.slice(0, 0-w);
+        var binaryString = removeWord.slice(0-k);
+        console.log("String: " + stringBinary);
+        console.log("remove w: " + removeWord);
+        console.log("binary string : " + binaryString);
+        var integerValue = parseInt(binaryString, 2);
+        mainMemoryMap[i] = integerValue;
+    }
+
+
+
+
 
     return { mainMemorySize, cacheMemorySize, mainMemoryMap };
 }
@@ -132,16 +229,7 @@ function simulate (viewAs, blockSize, mainMemorySize, cacheMemorySize, mainMemor
 
 // console.log(simulate('block', 2, 16, 4, [1, 7, 5, 0, 2, 1, 5, 6, 5, 2, 2, 0], 10, 1));
     
-    function convertToBlock(blockSize, mainMemorySize, cacheMemorySize, mainMemoryMap) {
-        const w = Math.log2(blockSize);
-        const k = Math.log2(cacheMemorySize);
-        const tag = mainMemorySize - w - k;
-    
-        // TODO: Do conversion function
-    
-        return { mainMemorySize, cacheMemorySize, mainMemoryMap };
-    }
-    
+  
     /**
      * Simulates the cache mapping function
      * @param {String} viewAs Either as 'address' or as 'block'

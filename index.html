@@ -101,12 +101,12 @@
 
               <div class="form-group">
                 <label for="input_blocksize">Block Size</label>
-                <input type="number"  min="1" class="form-control" id="input_blocksize" placeholder="Enter block size" required>
+                <input type="number"  min="1" class="form-control " id="input_blocksize" placeholder="Enter block size" required>
                 <div class="valid-feedback">
                   Looks good!
                 </div>
                 <div class="invalid-feedback">
-                  Please enter a block size.
+                  Please enter a valid block size.
                 </div>
               </div>
 
@@ -118,7 +118,7 @@
                   Looks good!
                 </div>
                 <div class="invalid-feedback">
-                  Please enter a main memory size.
+                  Please enter a valid main memory size.
                 </div>
               </div>
 
@@ -131,7 +131,7 @@
                   Looks good!
                 </div>
                 <div class="invalid-feedback">
-                  Please enter a cache memory size.
+                  Please enter a valid cache memory size.
                 </div>
               </div>
 
@@ -144,7 +144,7 @@
                   Looks good!
                 </div>
                 <div class="invalid-feedback">
-                  Please enter a memory access time value.
+                  Please enter a valid memory access time value.
                 </div>
               </div>
 
@@ -157,7 +157,7 @@
                   Looks good!
                 </div>
                 <div class="invalid-feedback">
-                  Please enter a memory access time value.
+                  Please enter a valid memory access time value.
                 </div>
               </div>
 
@@ -294,7 +294,7 @@
             event.preventDefault();
             submit();
           }
-          form.classList.add('was-validated');
+          // form.classList.add('was-validated');
         }, false);
       });
     }, false);
