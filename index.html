@@ -83,21 +83,7 @@
           <div class="card-body text-info">
             <form class="needs-validation" novalidate>
 
-              <div class="form-group" id="viewform">
-                <p>View input as</p>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" value="block" name="flexRadioDefault" id="flexRadioDefault1">
-                  <label class="form-check-label text-muted" for="flexRadioDefault1">
-                    Block
-                  </label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" value="address" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                  <label class="form-check-label text-muted" for="flexRadioDefault2">
-                    Address
-                  </label>
-                </div>
-              </div>
+              
 
 
               <div class="form-group">
@@ -111,10 +97,28 @@
                 </div>
               </div>
 
+              <br>
+
+              <div class="form-group" id="viewformSize">
+                <p>View size as</p>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" value="block" name="radioUnit" id="inputradio1" checked>
+                  <label class="form-check-label text-muted" for="inputradio1">
+                    Block
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" value="word" name="radioUnit" id="inputradio2" >
+                  <label class="form-check-label text-muted" for="inputradio2">
+                    Word
+                  </label>
+                </div>
+              </div>
+
               <div class="form-group">
                 <label for="input_mmsize">MM Memory Size</label>
                 <input type="number" min="1" class="form-control" id="input_mmsize" placeholder="Enter MM memory size" required>
-                <small id="input_mmsize" class="form-text text-muted">Either blocks or words.</small>
+                <!-- <small id="input_mmsize" class="form-text text-muted">Either blocks or words.</small> -->
                 <div class="valid-feedback">
                   Looks good!
                 </div>
@@ -127,7 +131,7 @@
                 <label for="input_cmsize">Cache Memory Size</label>
                 <input type="number" min="1" class="form-control" id="input_cmsize" placeholder="Enter cache memory size"
                   required>
-                <small id="input_cmsize" class="form-text text-muted">Either blocks or words.</small>
+                <!-- <small id="input_cmsize" class="form-text text-muted">Either blocks or words.</small> -->
                 <div class="valid-feedback">
                   Looks good!
                 </div>
@@ -163,6 +167,21 @@
               </div>
 
               <br>
+              <div class="form-group" id="viewform">
+                <p>View input as</p>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" value="block" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                  <label class="form-check-label text-muted" for="flexRadioDefault1">
+                    Block
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" value="address" name="flexRadioDefault" id="flexRadioDefault2">
+                  <label class="form-check-label text-muted" for="flexRadioDefault2">
+                    Address
+                  </label>
+                </div>
+              </div>
 
               <div class="form-group ">
                 <label for="input_mainMemoryMap">Main Memory Values</label>

@@ -41,12 +41,20 @@ $(document).ready(function() {
         
        
         viewAs = $('input[name=flexRadioDefault]:checked', '#viewform').val();
+        viewSizeAs = $('input[name=radioUnit]:checked', '#viewformSize').val();
         block2kSize = parseInt($("#input_blocksize").val());
-        mainMemorySize = parseInt($("#input_mmsize").val());
-        cacheMemorySize = parseInt($("#input_cmsize").val());
+        if(viewSizeAs == 'block') {
+            mainMemorySize = parseInt($("#input_mmsize").val());
+            cacheMemorySize = parseInt($("#input_cmsize").val());
+        }
+        else {
+            mainMemorySize = parseInt($("#input_mmsize").val()) / block2kSize;
+            cacheMemorySize = parseInt($("#input_cmsize").val()) / block2kSize;
+        }
         mainMemoryMap = sequence;
         memAccessTime = parseFloat($("#input_memaccesstime").val());
         cacheAccessTime = parseFloat($("#input_cacheaccesstime").val());
+        console.log(viewSizeAs);
         
         
     
@@ -58,7 +66,7 @@ $(document).ready(function() {
         var validcacheAccessTime = checkPositive(cacheAccessTime);
         var validAll = validBlock2kSize && validmainMemorySize && validcacheMemorySize && validmemAccessTime && validcacheAccessTime;
         
-        console.log(validBlock2kSize + " " + validmainMemorySize + " " + validcacheMemorySize + " " + validmemAccessTime + " " + validcacheAccessTime + " ")
+        // console.log(validBlock2kSize + " " + validmainMemorySize + " " + validcacheMemorySize + " " + validmemAccessTime + " " + validcacheAccessTime + " ");
         
         // Block Size Validation
         if(validBlock2kSize) {
