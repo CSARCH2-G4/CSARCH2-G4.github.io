@@ -55,8 +55,8 @@
   }
 
   #cacheSim {
-    width: 50% !important;
-    margin: auto;
+    width: 80% !important;
+    margin-left: 25%;
   }
 
   .inputrow {
@@ -249,23 +249,41 @@
               </div>
             </div>
             <div class="row">
+              
               <div class="col-1"></div>
               <div class="col-10">
                 <h1>Cache Memory</h1>
-                <table class="table" id="cacheSim">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">Block Number</th>
-                      <th scope="col">Data</th>
-                    </tr>
-                  </thead>
-                  <tbody id="simulationTable">
-                  </tbody>
-                </table>
+                <div class="row">
+                  <div class="col-6">
+                    <table class="table" id="cacheSim">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">Block Number</th>
+                          <th scope="col" class="text-right">Data</th>
+                        </tr>
+                      </thead>
+                      <tbody id="simulationTable">
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-4">
+                    <table class="table" id="cacheSim">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col" class="text-center">Hit</th>
+                          <th scope="col" class="text-center">Miss</th>
+                        </tr>
+                      </thead>
+                      <tbody id="simulationTable">
+                        <th scope="row" id="hits" class="text-center">0</th>
+                        <th scope="row" id="misses" class="text-center">0</th>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
               <div class="col-1"></div>
             </div>
-
           </div>
         </div>
       </div>
@@ -276,12 +294,6 @@
         <div class="card border-success mb-3 shadow-sm output-card" style="max-width: 100%;">
           <div class="card-header text-success "><b>Output</b></div>
           <div class="card-body text-success output-body" id="output-body">
-            <!-- <p class="card-text"><b>Number of Cache Hits:</b> Sample</p>
-            <p class="card-text"><b>Number of Cache Miss:</b> Sample</p>
-            <p class="card-text"><b>Miss Penalty:</b> Sample</p>
-            <p class="card-text"><b>Average Memory Access Time:</b> Sample</p>
-            <p class="card-text"><b>Total Memory Access Time:</b> Sample</p>
-            <p class="card-text"><b>Snapshot of Cache Memory:</b> Sample</p> -->
           </div>
 
           <!-- <div class="form-group text-center p-3">
@@ -289,6 +301,11 @@
           </div> -->
           <div class="output-button"></div>
         </div>
+      </div>
+    </div>
+    <div class="row text-center p-4 poutput-button">
+      <div class="col">
+        <button type="button" class="btn btn-warning" id="gooutput"><i class="fas fa-arrow-right"></i> PROCEED TO OUTPUT</button>
       </div>
     </div>
 
@@ -305,6 +322,7 @@
     $(".output-card").hide();
     $(".simulation-card").hide();
     $(".retry-button").hide();
+    $(".poutput-button").hide();
   });
 
   // Form validator
@@ -336,25 +354,22 @@
     var mmsize = $("#input_mmsize").val();
     var cachesize = $("#input_cmsize").val();
 
-    alert("Insert calculations here.");
-
     // Hide input card
     $(".input-card").hide();
-    $(".output-card").show();
+    $(".output-card").hide();
     $(".simulation-card").show();
     $(".retry-button").show();
+    $(".poutput-button").show();
 
     // For clearing and appending div contents
     $(".output-body").empty();
     $(".output-button").empty();
-    // $(".simulation-body").empty();
-    // $(".simulation-body").append('<p class="card-text">Insert simulation here</p>');
-    $(".output-body").append('<p class="card-text"><b>Number of Cache Hits:</b> Sample</p> <p class="card-text"><b>Number of Cache Miss:</b> Sample</p> <p class="card-text"><b>Miss Penalty:</b> Sample</p> <p class="card-text"><b>Average Memory Access Time:</b> Sample</p> <p class="card-text"><b>Total Memory Access Time:</b> Sample</p> <p class="card-text"><b>Snapshot of Cache Memory:</b> Sample</p>')
     $(".output-button").append('<div class="form-group text-center p-3"> <button type="button" class="btn btn-success" onclick="download()">SAVE AS .TXT FILE</button> </div>');
   }
 
   // Retry button
   function retry() {
+    location.reload()
     $(".simulation-body").empty();
     $(".output-body").empty();
     $(".output-button").empty();
