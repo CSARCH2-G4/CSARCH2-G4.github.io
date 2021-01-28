@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var viewAs, bloc2kSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime
+    var viewAs, bloc2kSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime, memoryMap
     // Value Sequence Builder
     var sequence = [];
     $("#addValues").click(function() {
@@ -142,7 +142,7 @@ $(document).ready(function() {
         $(".retry-button").show();
         $(".poutput-button").hide();
     
-        directMap = simulate(viewAs, block2kSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime);
+        directMap = simulate(viewAs, block2kSize, mainMemorySize, cacheMemorySize, memoryMap, memAccessTime, cacheAccessTime);
         printVals(directMap)
     });
     
