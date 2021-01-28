@@ -8,71 +8,32 @@ $(document).ready(function() {
 
         // Get value fromt textbox
         var stringSequence = $("#input_mainMemoryMap").val();
-        if(stringSequence.trim() != "") {
+        // Separate each using comma
+        var arraySequence = stringSequence.split(",");
+        // Trim white spaces
+        var noSpace = $.map(arraySequence, $.trim);
 
-            // Valid Inputs
-            $("#input_mainMemoryMap").removeClass("is-invalid");
-            $("#input_mainMemoryMap").addClass("is-valid");
-        
-            // Separate each using comma
-            var arraySequence = stringSequence.split(",");
-            // Trim white spaces
-            var noSpace = $.map(arraySequence, $.trim);
 
-            
-            var integerSequence = noSpace.map(function(x) {
-                return parseInt(x, 10);
-            });
+        var integerSequence = noSpace.map(function(x) {
+            return parseInt(x, 10);
+        });
 
-            // Check per element validity
-            var elementsAreValid = true;
-            for(var i = 0; i < integerSequence.length; i++) {
-                console.log(isNaN(integerSequence[i]))
-                if(elementsAreValid) {
-                    if(!isNaN(integerSequence[i])){
-                        elementsAreValid = true;
-                    }
-                    else {
-                        elementsAreValid = false;
-                    }
-                }
-            }
+        // Get multiplier
+        var multiplier = parseInt($("#input_mainMemoryMult").val());
 
-            if(elementsAreValid) {
-                // Get multiplier
-                var multiplier = parseInt($("#input_mainMemoryMult").val());
-                if (multiplier > 0) {
-                    // Remove error messages
-                    $("#input_mainMemoryMult").removeClass("is-invalid");
-
-                    // Add to sequence
-                    for (var i = 0; i < multiplier; i++) {
-                        sequence = sequence.concat(integerSequence);
-                    }
-
-                    // Add to table 
-                    $("#sequenceBody").empty();
-                    for (var i = 0; i < sequence.length; i++) {
-                        var row = "<tr> <td>" + i + "</td>" + "<td> " + sequence[i] + "</td> </tr>"
-                        $("#sequenceBody").append(row);
-                    }
-                }
-                else {
-                    $("#input_mainMemoryMult").removeClass("is-valid");
-                    $("#input_mainMemoryMult").addClass("is-invalid");
-                }
-            }
-            else {
-                $("#input_mainMemoryMap").removeClass("is-valid");
-                $("#input_mainMemoryMap").addClass("is-invalid");
-            } 
-
+        // Add to sequence
+        for(var i = 0; i < multiplier; i++) {
+            sequence = sequence.concat(integerSequence);
         }
-        else {
-            $("#input_mainMemoryMap").removeClass("is-valid");
-            $("#input_mainMemoryMap").addClass("is-invalid");
+
+
+        // Add to table
+        $("#sequenceBody").empty();
+        for(var i = 0; i < sequence.length; i++){
+            var row = "<tr> <td>" + i + "</td>" + "<td> "+ sequence[i] + "</td> </tr>"
+            $("#sequenceBody").append(row);
         }
-        
+
         console.log(sequence);
     });
 
@@ -196,7 +157,8 @@ $(document).ready(function() {
         $("#inputSimulation").empty()
     
         for(var x=0 ; x<cacheSize ; x++) {
-            $("#simulationTable").append("<tr> <th scope=\"row\">"+x+"</th><td id=\"block"+x+"\" class=\"text-right\">"+0+"</td> </tr>");
+            $("#simulationTable").append("<tr> <th scope=\"row\">"+x+"</th><td id=\"block"+x+"\" class=\"text-right\"></td> </tr>");
+            $("#block"+x).val('E');
         }
     
         for(var x=0 ; x<memoryMap.length ; x++) {
@@ -212,15 +174,13 @@ $(document).ready(function() {
                 if(snapshots[y][x]!=null){
                     $("#block"+x).text(snapshots[y][x]);
                     $("#block"+x).val(snapshots[y][x]);
-                }
+                }  
     
                 if(memoryMap[y]==snapshots[y][x])
                     $("#block"+x).attr('style', 'color:de9918');
                 else
                     $("#block"+x).attr('style', 'color:black');
-                console.log(snapshots[y][x]+' snap\n')
-                console.log(text+' text\n')
-                console.log( memoryMap[y]+' mmap\n\n')
+
                 if(snapshots[y][x]==text && memoryMap[y]==text){
                     hits = parseInt($("#hits").text())
                     hits++
@@ -236,7 +196,7 @@ $(document).ready(function() {
             }
             $("#input"+y).attr('style', 'color:ebba34');
             await sleep(2000);
-            console.log(snapshots[y])
+
         }
     
         for(var x=0 ; x<cacheSize ; x++) {
@@ -244,7 +204,7 @@ $(document).ready(function() {
             if(snapshots[memoryMap.length-1][x]!=null)
                 $("#block"+x).text(snapshots[memoryMap.length-1][x]);
             else
-                $("#block"+x).text('0');
+                $("#block"+x).text('E');
         }
     };
     
@@ -263,7 +223,7 @@ $(document).ready(function() {
             if(snapshots[memoryMap.length-1][x]!=null)
                 $("#snapshotTable").append("<tr> <th scope=\"row\">"+x+"</th><td>"+snapshots[memoryMap.length-1][x]+"</td> </tr>");
             else
-                $("#snapshotTable").append("<tr> <th scope=\"row\">"+x+"</th><td>0</td> </tr>");
+                $("#snapshotTable").append("<tr> <th scope=\"row\">"+x+"</th><td>E</td> </tr>");
         }
     }
 
@@ -283,9 +243,9 @@ function convertToBlock(blockSize, mainMemorySize, cacheMemorySize, mainMemoryMa
         var stringBinary = mainMemoryMap[i].toString();
         var removeWord = stringBinary.slice(0, 0-w);
         var binaryString = removeWord.slice(0-k);
-        console.log("String: " + stringBinary);
-        console.log("remove w: " + removeWord);
-        console.log("binary string : " + binaryString);
+        // console.log("String: " + stringBinary);
+        // console.log("remove w: " + removeWord);
+        // console.log("binary string : " + binaryString);
         var integerValue = parseInt(binaryString, 2);
         mainMemoryMap[i] = integerValue;
     }
@@ -336,7 +296,7 @@ function simulate (viewAs, blockSize, mainMemorySize, cacheMemorySize, mainMemor
         cache[blockMap] = blockNum;
         cacheSnapshot.push([...cache]);
     });
-    console.log(cacheSnapshot)
+    // console.log(cacheSnapshot)
 
     aveAccessTime = ( cacheHit / (cacheHit + cacheMiss) ) * cacheAccessTime +
                     ( cacheMiss / (cacheHit + cacheMiss) ) * missPenalty;
