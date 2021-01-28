@@ -103,7 +103,7 @@
                 </div>
               </div>
               <div class="form-group text-center pt-3">
-                <button type="submit" class="btn btn-info">SUBMIT</button>
+                <button  type="submit" class="btn btn-info" id="submitbtn">SUBMIT</button>
               </div>
             </form>
           </div>
@@ -115,8 +115,37 @@
       <div class="col">
         <div class="card border-warning mb-3 shadow-sm" style="max-width: 100%;">
           <div class="card-header text-warning "><b>Simulation</b></div>
-          <div class="card-body text-warning simulation-body" id="simulation-body">
-
+          <div class="card-body text-warning simulation-body" id="simulation-body" hidden>
+            <div class="row">
+              <div class="col-1"></div>
+              <div class="col-10">
+                <h1>Input</h1>
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr id="inputSimulation">
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-1"></div>
+              <div class="col-10">
+                <h1 id="cacheSim">Cache Memory</h1>
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Block Number</th>
+                      <th scope="col">Data</th>
+                    </tr>
+                  </thead>
+                  <tbody id="simulationTable">    
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-1"></div>
+            </div>
+            
           </div>
         </div>
       </div>
@@ -178,14 +207,11 @@
     var mmsize = $("#input_mmsize").val();
     var cachesize = $("#input_cmsize").val();
 
-    
-    alert("Insert calculations here.");
-
     // For clearing and appending div contents
     $(".output-body").empty();
     $(".output-button").empty();
-    $(".simulation-body").empty();
-    $(".simulation-body").append('<p class="card-text">Insert simulation here</p>');
+    // $(".simulation-body").empty();
+    // $(".simulation-body").append('<p class="card-text">Insert simulation here</p>');
     $(".output-body").append('<p class="card-text"><b>Number of Cache Hits:</b> Sample</p> <p class="card-text"><b>Number of Cache Miss:</b> Sample</p> <p class="card-text"><b>Miss Penalty:</b> Sample</p> <p class="card-text"><b>Average Memory Access Time:</b> Sample</p> <p class="card-text"><b>Total Memory Access Time:</b> Sample</p> <p class="card-text"><b>Snapshot of Cache Memory:</b> Sample</p>')
     $(".output-button").append('<div class="form-group text-center p-3"> <button type="button" class="btn btn-success" onclick="download()">SAVE AS .TXT FILE</button> </div>');
   }
