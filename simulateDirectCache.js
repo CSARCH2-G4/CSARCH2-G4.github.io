@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     $("#submitbtn").click(async function(){
         $(document).scrollTop(700)
-        memoryMap = [1, 7, 5, 0, 2, 1, 5, 6, 5, 2, 2, 0]
+        memoryMap = [1, 7, 5, 0, 2, 1, 5, 6, 5]
 
         directMap = simulate('block', 2, 16, 4, memoryMap, 10, 1);
         snapshots = directMap.cacheSnapshot
@@ -19,7 +19,7 @@ $(document).ready(function() {
         }
 
         for(var x=0 ; x<memoryMap.length ; x++) {
-            $("#inputSimulation").append("<th class=\"text-center\" scope=\"col\" id=\"input"+x+"\">"+memoryMap[x]+"</th>");
+            $("#inputSimulation").append("<div class=\"text-center col\" id=\"input"+x+"\">"+memoryMap[x]+"</div>");
         }
 
         $("#simulation-body").prop('hidden', false);;

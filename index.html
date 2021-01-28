@@ -52,6 +52,17 @@
     transition: opacity 1s;
     -webkit-transition: opacity 1;
   }
+  #cacheSim {
+    width: 50% !important;
+    margin: auto;
+  }
+
+  .inputrow {
+    background-color: rgb(51, 52, 56);
+    color: white;
+    padding: 10px;
+    margin: 10px;
+  }
 </style>
 
 <body onload="document.body.style.opacity='1'">
@@ -120,19 +131,16 @@
               <div class="col-1"></div>
               <div class="col-10">
                 <h1>Input</h1>
-                <table class="table">
-                  <thead class="thead-dark">
-                    <tr id="inputSimulation">
-                    </tr>
-                  </thead>
-                </table>
+                <div class="row inputrow" id="inputSimulation">
+                  
+                </div>
               </div>
             </div>
             <div class="row">
               <div class="col-1"></div>
               <div class="col-10">
-                <h1 id="cacheSim">Cache Memory</h1>
-                <table class="table">
+                <h1>Cache Memory</h1>
+                <table class="table" id="cacheSim">
                   <thead class="thead-dark">
                     <tr>
                       <th scope="col">Block Number</th>
