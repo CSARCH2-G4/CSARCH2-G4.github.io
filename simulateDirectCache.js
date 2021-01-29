@@ -216,11 +216,11 @@ $(document).ready(function () {
         snapshots = directMap.cacheSnapshot
         cacheSize = snapshots[0].length
 
-        $("#output-body").append('<p class="card-text"><b>Number of Cache Hits:</b>' + directMap.cacheHit + '</p>')
-        $("#output-body").append('<p class="card-text"><b>Number of Cache Miss:</b>' + directMap.cacheMiss + '</p>')
-        $("#output-body").append('<p class="card-text"><b>Miss Penalty (seconds):</b>' + directMap.missPenalty + '</p>')
-        $("#output-body").append('<p class="card-text"><b>Average Memory Access Time (seconds):</b>' + directMap.aveAccessTime + '</p>')
-        $("#output-body").append('<p class="card-text"><b>Total Memory Access Time (seconds):</b>' + directMap.totalAccessTime + '</p>')
+        $("#output-body").append('<p class="card-text"><b>Number of Cache Hits:</b> ' + directMap.cacheHit + '</p>')
+        $("#output-body").append('<p class="card-text"><b>Number of Cache Miss:</b> ' + directMap.cacheMiss + '</p>')
+        $("#output-body").append('<p class="card-text"><b>Miss Penalty (seconds):</b> ' + directMap.missPenalty + '</p>')
+        $("#output-body").append('<p class="card-text"><b>Average Memory Access Time (seconds):</b> ' + directMap.aveAccessTime + '</p>')
+        $("#output-body").append('<p class="card-text"><b>Total Memory Access Time (seconds):</b> ' + directMap.totalAccessTime + '</p>')
         $("#output-body").append('<p class="card-text"><b>Final Snapshot of Cache Memory:</p>')
         $("#output-body").append("<div class=\"row\"><div class=\"col\"><table class=\"table\" style='width: 40%'><thead class=\"thead-dark\"><tr><th scope=\"col\">Block Number</th><th scope=\"col\">Data</th></tr></thead><tbody id='snapshotTable'></tbody></table></div></div>")
         for (var x = 0; x < cacheSize; x++) {
