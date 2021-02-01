@@ -83,9 +83,12 @@ $(document).ready(function () {
     });
 
     $("#submitInputs").click(function () {
-        viewAs = $('input[name=flexRadioDefault]:checked', '#viewform').val();
+        viewInputAs = $('input[name=flexRadioDefault]:checked', '#viewform').val();
         viewSizeAs = $('input[name=radioUnit]:checked', '#viewformSize').val();
         block2kSize = parseInt($("#input_blocksize").val());
+        mainMemorySize = parseInt($("#input_mmsize").val());
+        cacheMemorySize = parseInt($("#input_cmsize").val());
+        /*
         if (viewSizeAs == 'block') {
             mainMemorySize = parseInt($("#input_mmsize").val());
             cacheMemorySize = parseInt($("#input_cmsize").val());
@@ -93,16 +96,17 @@ $(document).ready(function () {
         else {
             mainMemorySize = parseInt($("#input_mmsize").val()) / block2kSize;
             cacheMemorySize = parseInt($("#input_cmsize").val()) / block2kSize;
-        }
+        } */
         mainMemoryMap = sequence;
         memAccessTime = parseFloat($("#input_memaccesstime").val());
         cacheAccessTime = parseFloat($("#input_cacheaccesstime").val());
-        console.log(viewSizeAs);
 
         // Validation
-        var validBlock2kSize = powerOfTwo(block2kSize);
-        var validmainMemorySize = powerOfTwo(mainMemorySize);
-        var validcacheMemorySize = powerOfTwo(cacheMemorySize);
+        let validConfig = viewSizeAs === 'word' && validDivisible(block2kSize, mainMemorySize, cacheMemorySize) || viewSizeAs === 'block';
+
+        var validBlock2kSize = validConfig;
+        var validmainMemorySize = validConfig;
+        var validcacheMemorySize = validConfig;
         var validmemAccessTime = checkPositive(memAccessTime);
         var validcacheAccessTime = checkPositive(cacheAccessTime);
         var validAll = validBlock2kSize && validmainMemorySize && validcacheMemorySize && validmemAccessTime && validcacheAccessTime;
@@ -160,7 +164,7 @@ $(document).ready(function () {
 
         if (validAll) {
             console.log('hello')
-            simulation(viewAs, block2kSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime)
+            simulation(viewInputAs, viewSizeAs, block2kSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime)
             submit();
         }
         else {
@@ -172,6 +176,12 @@ $(document).ready(function () {
     function checkPositive(value) {
         return value > 0;
     }
+
+    function validDivisible(blockSize, mainMemorySize, cacheMemorySize) {
+        console.log(cacheMemorySize % blockSize, mainMemorySize % blockSize)
+        return cacheMemorySize % blockSize === 0 && mainMemorySize % blockSize === 0;
+    }
+
 
     function powerOfTwo(x) {
         return (Math.log(x) / Math.log(2)) % 1 === 0;
@@ -188,13 +198,13 @@ $(document).ready(function () {
         $(".retry-button").show();
         $(".poutput-button").hide();
 
-        directMap = simulate(viewAs, block2kSize, mainMemorySize, cacheMemorySize, memoryMap, memAccessTime, cacheAccessTime);
+        directMap = simulate(viewInputAs, viewSizeAs, block2kSize, mainMemorySize, cacheMemorySize, memoryMap, memAccessTime, cacheAccessTime);
         printVals(directMap)
     });
 
-    async function simulation(viewAs, blockSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime) {
+    async function simulation(viewInputAs, viewSizeAs, blockSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime) {
         memoryMap = mainMemoryMap
-        directMap = simulate(viewAs, blockSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime);
+        directMap = simulate(viewInputAs, viewSizeAs, blockSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime);
         console.log(directMap)
         snapshots = directMap.cacheSnapshot
         cacheSize = snapshots[0].length
@@ -283,8 +293,9 @@ function convertToBlock(blockSize, mainMemorySize, cacheMemorySize, mainMemoryMa
     const k = Math.log2(cacheMemorySize);
 
     const tag = mainMemorySize - w - k;
+    let convertedMap = [];
 
-    // TODO: Do conversion function
+    /*
     for (var i = 0; i < mainMemoryMap.length; i++) {
         var stringBinary = mainMemoryMap[i].toString();
         var removeWord = stringBinary.slice(0, 0 - w);
@@ -294,8 +305,13 @@ function convertToBlock(blockSize, mainMemorySize, cacheMemorySize, mainMemoryMa
         // console.log("binary string : " + binaryString);
         var integerValue = parseInt(binaryString, 2);
         mainMemoryMap[i] = integerValue;
-    }
-    return { mainMemorySize, cacheMemorySize, mainMemoryMap };
+    } */
+    mainMemoryMap.forEach(loc => {
+        //console.log(loc, parseInt(loc,2), parseInt(loc,2) >>> w, (parseInt(loc,2) >>> w).toString(2), (parseInt(loc,2) >>> w) % cacheMemorySize, ((parseInt(loc,2) >>> w) % cacheMemorySize).toString(2))
+        convertedMap.push((parseInt(loc,2) >>> w) % cacheMemorySize)
+    });
+
+    return { mainMemorySize, cacheMemorySize, convertedMap };
 }
 
 
@@ -304,7 +320,8 @@ function convertToBlock(blockSize, mainMemorySize, cacheMemorySize, mainMemoryMa
 
 /**
  * Simulates the cache mapping function
- * @param {String} viewAs Either as 'address' or as 'block'
+ * @param {String} viewInputAs Either as 'address' or as 'block'
+ * @param {String} viewSizeAs Either as 'block' or as 'word'
  * @param {Number} blockSize Integer power of 2 that represents block size in words
  * @param {Number} mainMemorySize Integer power of 2 that represents the size of a memory block in bits
  * @param {Number} cacheMemorySize Integer power of 2 that represents the cache size in words
@@ -312,25 +329,31 @@ function convertToBlock(blockSize, mainMemorySize, cacheMemorySize, mainMemoryMa
  * @param {Number} memAccessTime Number that represents the time taken to access the main memory. Keep unit the same as cacheAccessTime
  * @param {Number} cacheAccessTime Number that represents the time taken to access the cache memory. Keep unit the same as memAccessTime
  */
-function simulate(viewAs, blockSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime) {
+function simulate(viewInputAs, viewSizeAs, blockSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime) {
 
     let cacheHit = 0,
         cacheMiss = 0,
-        missPenalty = (cacheAccessTime + memAccessTime) * 2,
+        missPenalty = cacheAccessTime * 2 + blockSize * memAccessTime,
         aveAccessTime,
         totalAccessTime = 0,
-        cacheSnapshot = [];
+        cacheSnapshot = [],
+        mainMemoryBlockMap;
 
-    if (viewAs === 'address') {
+    if (viewSizeAs === 'word') {
+        mainMemorySize = mainMemorySize / blockSize;
+        cacheMemorySize = cacheMemorySize / blockSize;
+    }
+
+    if (viewInputAs === 'address') {
         convResult = convertToBlock(blockSize, mainMemorySize, cacheMemorySize, mainMemoryMap);
-        mainMemorySize = convResult.mainMemorySize;
-        cacheMemorySize = convResult.cacheMemorySize;
-        mainMemoryMap = convResult.mainMemoryMap;
+        mainMemoryBlockMap = convResult.convertedMap;
+    } else {
+        mainMemoryBlockMap = mainMemoryMap;
     }
 
     let cache = Array(cacheMemorySize).fill(null);
 
-    mainMemoryMap.forEach(blockNum => {
+    mainMemoryBlockMap.forEach((blockNum, i) => {
         let blockMap = blockNum % cacheMemorySize;
 
         if (cache[blockMap] === null || cache[blockMap] !== blockNum) {
@@ -339,7 +362,7 @@ function simulate(viewAs, blockSize, mainMemorySize, cacheMemorySize, mainMemory
             cacheHit += 1;
         }
 
-        cache[blockMap] = blockNum;
+        cache[blockMap] = mainMemoryMap[i];
         cacheSnapshot.push([...cache]);
     });
     console.log(cacheSnapshot)
@@ -347,9 +370,9 @@ function simulate(viewAs, blockSize, mainMemorySize, cacheMemorySize, mainMemory
     aveAccessTime = (cacheHit / (cacheHit + cacheMiss)) * cacheAccessTime +
         (cacheMiss / (cacheHit + cacheMiss)) * missPenalty;
 
-    totalAccessTime = cacheHit * 2 * cacheAccessTime +
-        cacheMiss * 2 * (memAccessTime + cacheAccessTime) +
-        cacheMiss * cacheAccessTime;
+    totalAccessTime = (cacheHit * blockSize * cacheAccessTime) + 
+        (cacheMiss * blockSize * (memAccessTime + cacheAccessTime)) +
+        (cacheMiss * cacheAccessTime);
     return { cacheHit, cacheMiss, missPenalty, aveAccessTime, totalAccessTime, cacheSnapshot }
 }
 
