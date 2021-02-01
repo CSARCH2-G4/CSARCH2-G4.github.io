@@ -133,7 +133,7 @@ $(document).ready(function () {
         // Validation
         let validConfig = viewSizeAs === 'word' && validDivisible(block2kSize, mainMemorySize, cacheMemorySize) || viewSizeAs === 'block';
 
-        var validBlock2kSize = validConfig && powerOfTwo(bloc2kSize) && checkPositive(mainMemorySize);
+        var validBlock2kSize = validConfig && powerOfTwo(block2kSize) && checkPositive(mainMemorySize);
         var validmainMemorySize = validConfig && checkPositive(mainMemorySize);
         var validcacheMemorySize = validConfig && checkPositive(cacheMemorySize);
         var validmemAccessTime = checkPositive(memAccessTime);
