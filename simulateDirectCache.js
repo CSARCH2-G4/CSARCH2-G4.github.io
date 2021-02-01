@@ -61,7 +61,6 @@ $(document).ready(function () {
                 else { // Viewed as address
                     for (var i = 0; i < integerSequence.length; i++) {
                         var decimalValue = parseInt(integerSequence[i].toString(), 2);
-                        console.log(decimalValue + " " + mainMemorySize);
                        
                         if (elementsAreValid) {
                             if ((!isNaN(integerSequence[i])) && (decimalValue >= 0) && (decimalValue < mainMemorySize)) {
@@ -110,8 +109,6 @@ $(document).ready(function () {
                 $("#input_mainMemoryMap").addClass("is-invalid");
             }
         }
-
-        console.log(sequence);
     });
 
     $("#submitInputs").click(function () {
@@ -195,7 +192,6 @@ $(document).ready(function () {
         }
 
         if (validAll) {
-            console.log('hello')
             simulation(viewInputAs, viewSizeAs, block2kSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime)
             submit();
         }
@@ -211,7 +207,6 @@ $(document).ready(function () {
     }
 
     function validDivisible(blockSize, mainMemorySize, cacheMemorySize) {
-        console.log(cacheMemorySize % blockSize, mainMemorySize % blockSize)
         return cacheMemorySize % blockSize === 0 && mainMemorySize % blockSize === 0;
     }
 
@@ -238,7 +233,6 @@ $(document).ready(function () {
     async function simulation(viewInputAs, viewSizeAs, blockSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime) {
         memoryMap = mainMemoryMap
         directMap = simulate(viewInputAs, viewSizeAs, blockSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime);
-        console.log(directMap)
         snapshots = directMap.cacheSnapshot
         cacheSize = snapshots[0].length
 
@@ -398,7 +392,6 @@ function simulate(viewInputAs, viewSizeAs, blockSize, mainMemorySize, cacheMemor
         cache[blockMap] = mainMemoryMap[i];
         cacheSnapshot.push([...cache]);
     });
-    console.log(cacheSnapshot)
 
     aveAccessTime = (cacheHit / (cacheHit + cacheMiss)) * cacheAccessTime +
         (cacheMiss / (cacheHit + cacheMiss)) * missPenalty;
