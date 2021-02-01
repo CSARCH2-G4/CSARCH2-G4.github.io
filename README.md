@@ -3,13 +3,18 @@
 ## Requirements
 #### Input: 
 * Block Size
-* Main Memory Size (either blocks or words)
-* Cache Memory Size (either blocks or words)
-* Memory Access Time
-* Cache Access Time
-* Main Memory Values
-* Program flow to be simulated and other parameters deemed needed (example: can simulate cache problem set # 4,5,6)
 
+* Main Memory Size (either blocks or words)
+
+* Cache Memory Size (either blocks or words)
+
+* Memory Access Time
+
+* Cache Access Time
+
+* Main Memory Values
+
+* Program flow to be simulated and other parameters deemed needed (example: can simulate cache problem set # 4,5,6)
 
 #### Output:
 * Number of cache hits
@@ -61,6 +66,9 @@
 
 ## Authors
 * Trisha Pelagio
+
 * Stephen Salamante
+
 * Tony Ramirez
+
 * Lance Teng

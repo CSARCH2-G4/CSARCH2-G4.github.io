@@ -11,7 +11,7 @@ $(document).ready(function () {
             viewAs = $('input[name=flexRadioDefault]:checked', '#viewform').val();
         
 
-            // Get value fromt textbox
+            // Get value from textbox
             var stringSequence = $("#input_mainMemoryMap").val();
             if (stringSequence.trim() != "") {
 
@@ -30,18 +30,50 @@ $(document).ready(function () {
                 });
 
                 // Check per element validity
+                
+                viewSizeAs = $('input[name=radioUnit]:checked', '#viewformSize').val();
+                block2kSize = parseInt($("#input_blocksize").val());
+                if (viewSizeAs == 'block') {
+                    mainMemorySize = parseInt($("#input_mmsize").val());
+                    cacheMemorySize = parseInt($("#input_cmsize").val());
+                }
+                else {
+                    mainMemorySize = parseInt($("#input_mmsize").val()) / block2kSize;
+                    cacheMemorySize = parseInt($("#input_cmsize").val()) / block2kSize;
+                }
+
+
                 var elementsAreValid = true;
-                for (var i = 0; i < integerSequence.length; i++) {
-                    console.log(isNaN(integerSequence[i]))
-                    if (elementsAreValid) {
-                        if (!isNaN(integerSequence[i])) {
-                            elementsAreValid = true;
-                        }
-                        else {
-                            elementsAreValid = false;
+
+                if(viewAs == 'block') {
+                    for (var i = 0; i < integerSequence.length; i++) {
+                        // console.log(isNaN(integerSequence[i]))
+                        if (elementsAreValid) {
+                            if ((!isNaN(integerSequence[i])) && (integerSequence[i] >= 0) && (integerSequence[i] < mainMemorySize)) {
+                                elementsAreValid = true;
+                            }
+                            else {
+                                elementsAreValid = false;
+                            }
                         }
                     }
                 }
+                else { // Viewed as address
+                    for (var i = 0; i < integerSequence.length; i++) {
+                        var decimalValue = parseInt(integerSequence[i].toString(), 2);
+                        console.log(decimalValue + " " + mainMemorySize);
+                       
+                        if (elementsAreValid) {
+                            if ((!isNaN(integerSequence[i])) && (decimalValue >= 0) && (decimalValue < mainMemorySize)) {
+                                elementsAreValid = true;
+                            }
+                            else {
+                                elementsAreValid = false;
+                            }
+                        }
+                    }
+                }
+                
 
                 if (elementsAreValid) {
                     // Get multiplier
@@ -172,6 +204,7 @@ $(document).ready(function () {
         }
 
     });
+
 
     function checkPositive(value) {
         return value > 0;
