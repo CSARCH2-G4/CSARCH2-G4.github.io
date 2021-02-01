@@ -3,7 +3,7 @@
 ## Requirements
 #### Input: 
 * Block Size
-* MM Memory Size (either blocks or words)
+* Main Memory Size (either blocks or words)
 * Cache Memory Size (either blocks or words)
 * Memory Access Time
 * Cache Access Time
