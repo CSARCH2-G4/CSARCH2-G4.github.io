@@ -4,78 +4,80 @@ $(document).ready(function () {
     // Value Sequence Builder
     var sequence = [];
     $("#addValues").click(function () {
-        if ($("#input_mainMemoryMap").val() == '') {
-            alert('Main Memory Values cannot be empty!')
-        } else {
+        if ($("#input_mainMemoryMap").val() == "") {
+            alert('Main Memory Values cannot be empty!');
+        } 
+        else {
             viewAs = $('input[name=flexRadioDefault]:checked', '#viewform').val();
 
-        // Get value fromt textbox
-        var stringSequence = $("#input_mainMemoryMap").val();
-        if(stringSequence.trim() != "") {
+            // Get value fromt textbox
+            var stringSequence = $("#input_mainMemoryMap").val();
+            if (stringSequence.trim() != "") {
 
-            // Valid Inputs
-            $("#input_mainMemoryMap").removeClass("is-invalid");
-            $("#input_mainMemoryMap").addClass("is-valid");
-        
-            // Separate each using comma
-            var arraySequence = stringSequence.split(",");
-            // Trim white spaces
-            var noSpace = $.map(arraySequence, $.trim);
+                // Valid Inputs
+                $("#input_mainMemoryMap").removeClass("is-invalid");
+                $("#input_mainMemoryMap").addClass("is-valid");
 
-            
-            var integerSequence = noSpace.map(function(x) {
-                return parseInt(x, 10);
-            });
+                // Separate each using comma
+                var arraySequence = stringSequence.split(",");
+                // Trim white spaces
+                var noSpace = $.map(arraySequence, $.trim);
 
-            // Check per element validity
-            var elementsAreValid = true;
-            for(var i = 0; i < integerSequence.length; i++) {
-                console.log(isNaN(integerSequence[i]))
-                if(elementsAreValid) {
-                    if(!isNaN(integerSequence[i])){
-                        elementsAreValid = true;
-                    }
-                    else {
-                        elementsAreValid = false;
+
+                var integerSequence = noSpace.map(function (x) {
+                    return parseInt(x, 10);
+                });
+
+                // Check per element validity
+                var elementsAreValid = true;
+                for (var i = 0; i < integerSequence.length; i++) {
+                    console.log(isNaN(integerSequence[i]))
+                    if (elementsAreValid) {
+                        if (!isNaN(integerSequence[i])) {
+                            elementsAreValid = true;
+                        }
+                        else {
+                            elementsAreValid = false;
+                        }
                     }
                 }
-            }
 
-            if(elementsAreValid) {
-                // Get multiplier
-                var multiplier = parseInt($("#input_mainMemoryMult").val());
-                if (multiplier > 0) {
-                    // Remove error messages
-                    $("#input_mainMemoryMult").removeClass("is-invalid");
+                if (elementsAreValid) {
+                    // Get multiplier
+                    var multiplier = parseInt($("#input_mainMemoryMult").val());
+                    if (multiplier > 0) {
+                        // Remove error messages
+                        $("#input_mainMemoryMult").removeClass("is-invalid");
 
-                    // Add to sequence
-                    for (var i = 0; i < multiplier; i++) {
-                        sequence = sequence.concat(integerSequence);
+                        // Add to sequence
+                        for (var i = 0; i < multiplier; i++) {
+                            sequence = sequence.concat(integerSequence);
+                        }
+
+                        // Add to table 
+                        $("#sequenceBody").empty();
+                        for (var i = 0; i < sequence.length; i++) {
+                            var row = "<tr> <td>" + i + "</td>" + "<td> " + sequence[i] + "</td> </tr>"
+                            $("#sequenceBody").append(row);
+                        }
                     }
-
-                    // Add to table 
-                    $("#sequenceBody").empty();
-                    for (var i = 0; i < sequence.length; i++) {
-                        var row = "<tr> <td>" + i + "</td>" + "<td> " + sequence[i] + "</td> </tr>"
-                        $("#sequenceBody").append(row);
+                    else {
+                        $("#input_mainMemoryMult").removeClass("is-valid");
+                        $("#input_mainMemoryMult").addClass("is-invalid");
                     }
                 }
                 else {
-                    $("#input_mainMemoryMult").removeClass("is-valid");
-                    $("#input_mainMemoryMult").addClass("is-invalid");
+                    $("#input_mainMemoryMap").removeClass("is-valid");
+                    $("#input_mainMemoryMap").addClass("is-invalid");
                 }
+
             }
             else {
                 $("#input_mainMemoryMap").removeClass("is-valid");
                 $("#input_mainMemoryMap").addClass("is-invalid");
-            } 
+            }
+        }
 
-        }
-        else {
-            $("#input_mainMemoryMap").removeClass("is-valid");
-            $("#input_mainMemoryMap").addClass("is-invalid");
-        }
-        
         console.log(sequence);
     });
 
