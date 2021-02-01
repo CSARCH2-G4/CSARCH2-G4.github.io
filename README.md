@@ -33,7 +33,7 @@
 
 3. Choose whether to view the memory size as block or word from the radio buttons.
 
-4. Enter a value for the MM memory size.
+4. Enter a value for the main memory size.
 
 5. Enter a value for the cache mmemory size.
 
