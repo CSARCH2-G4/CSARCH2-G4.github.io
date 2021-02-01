@@ -120,6 +120,7 @@ $(document).ready(function () {
         if (validAll) {
             console.log('hello')
             simulation(viewAs, block2kSize, mainMemorySize, cacheMemorySize, mainMemoryMap, memAccessTime, cacheAccessTime)
+            submit();
         }
         else {
             alert("Please fix the errors indicated.");
