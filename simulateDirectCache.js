@@ -136,9 +136,9 @@ $(document).ready(function () {
         // Validation
         let validConfig = viewSizeAs === 'word' && validDivisible(block2kSize, mainMemorySize, cacheMemorySize) || viewSizeAs === 'block';
 
-        var validBlock2kSize = validConfig;
-        var validmainMemorySize = validConfig;
-        var validcacheMemorySize = validConfig;
+        var validBlock2kSize = validConfig && powerOfTwo(bloc2kSize) && checkPositive(mainMemorySize);
+        var validmainMemorySize = validConfig && checkPositive(mainMemorySize);
+        var validcacheMemorySize = validConfig && checkPositive(cacheMemorySize);
         var validmemAccessTime = checkPositive(memAccessTime);
         var validcacheAccessTime = checkPositive(cacheAccessTime);
         var validAll = validBlock2kSize && validmainMemorySize && validcacheMemorySize && validmemAccessTime && validcacheAccessTime;
@@ -355,9 +355,9 @@ function convertToBlock(blockSize, mainMemorySize, cacheMemorySize, mainMemoryMa
  * Simulates the cache mapping function
  * @param {String} viewInputAs Either as 'address' or as 'block'
  * @param {String} viewSizeAs Either as 'block' or as 'word'
- * @param {Number} blockSize Integer power of 2 that represents block size in words
- * @param {Number} mainMemorySize Integer power of 2 that represents the size of a memory block in bits
- * @param {Number} cacheMemorySize Integer power of 2 that represents the cache size in words
+ * @param {Number} blockSize Integer that represents block size in words
+ * @param {Number} mainMemorySize Integer that represents the size of a memory block in bits
+ * @param {Number} cacheMemorySize Integer that represents the cache size in words
  * @param {Array} mainMemoryMap Array of integers that represent the blocks or addresses to be mapped
  * @param {Number} memAccessTime Number that represents the time taken to access the main memory. Keep unit the same as cacheAccessTime
  * @param {Number} cacheAccessTime Number that represents the time taken to access the cache memory. Keep unit the same as memAccessTime
