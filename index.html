@@ -369,6 +369,7 @@
     $(".output-body").empty();
     $(".output-button").empty();
     $(".output-button").append('<div class="form-group text-center p-3"> <button type="button" class="btn btn-success" onclick="download()">SAVE AS .TXT FILE</button> </div>');
+    $(".output-button").append('<div class="form-group text-center p-3"> <button type="button" class="btn btn-success" onclick="downloadAlt()">SAVE AS .TXT FILE</button> </div>');
   }
 
   // Retry button
@@ -395,6 +396,24 @@
     a.href = "data:text/plain," + textToWrite;
     a.click();
   }
+
+  function downloadAlt() {
+    var fileName = 'directcache.txt';
+    downloadInnerHtml(fileName, 'output-body');
+  }
+
+  function downloadInnerHtml(filename, elId) {
+    var elHtml = document.getElementById(elId).innerHTML;
+    elHtml.replace(/\n/g, "%0D%0A");
+    var link = document.createElement('a');
+    var mimeType = 'text/plain';
+
+    link.setAttribute('download', filename);
+    link.setAttribute('href', 'data:' + mimeType + ';charset=utf-8,' + encodeURIComponent(elHtml));
+    link.click();
+  }
+
+
 </script>
 
 </html>
