@@ -69,6 +69,6 @@
 
 * Stephen Salamante
 
-* Tony Ramirez
+* Bryce Ramirez
 
 * Lance Teng
