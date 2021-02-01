@@ -48,7 +48,7 @@
 
 8. Choose whether to view the input as block or address from the radio buttons.
 
-9. Enter a string of values for the main memory values—the numbers should be separated with commas.
+9. Enter a string of values for the main memory values—the numbers should be separated with commas. The multiplier dictates how many times the sequence will be added. If input is viewed as address, the values must be in binary.
 
 10. Click the 'Add Values' button, which will show you a table containing values with its corresponding index.
 
@@ -69,6 +69,6 @@
 
 * Stephen Salamante
 
-* Tony Ramirez
+* Bryce Ramirez
 
 * Lance Teng
