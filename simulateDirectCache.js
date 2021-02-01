@@ -10,7 +10,7 @@ $(document).ready(function () {
         } 
         else {
             viewAs = $('input[name=flexRadioDefault]:checked', '#viewform').val();
-        }
+        
 
             // Get value fromt textbox
             var stringSequence = $("#input_mainMemoryMap").val();
