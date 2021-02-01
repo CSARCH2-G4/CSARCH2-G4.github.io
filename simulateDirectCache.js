@@ -310,9 +310,9 @@ $(document).ready(function () {
         $("#output-body").append("<div class=\"row\"><div class=\"col\"><table class=\"table\" style='width: 40%'><thead class=\"thead-dark\"><tr><th scope=\"col\">Block Number</th><th scope=\"col\">Data</th></tr></thead><tbody id='snapshotTable'></tbody></table></div></div>")
         for (var x = 0; x < cacheSize; x++) {
             if (snapshots[memoryMap.length - 1][x] != null)
-                $("#snapshotTable").append("<tr> <th scope=\"row\">" + x + "</th><td>" + snapshots[memoryMap.length - 1][x] + "</td> </tr>");
+                $("#snapshotTable").append("<tr> <th scope=\"row\">" + x + "\t</th><td>" + snapshots[memoryMap.length - 1][x] + "</td> </tr>");
             else
-                $("#snapshotTable").append("<tr> <th scope=\"row\">" + x + "</th><td>E</td> </tr>");
+                $("#snapshotTable").append("<tr> <th scope=\"row\">" + x + "\t</th><td>E</td> </tr>");
         }
     }
 
