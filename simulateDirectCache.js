@@ -383,7 +383,7 @@ function simulate(viewInputAs, viewSizeAs, blockSize, mainMemorySize, cacheMemor
     mainMemoryBlockMap.forEach((blockNum, i) => {
         let blockMap = blockNum % cacheMemorySize;
 
-        if (cache[blockMap] === null || cache[blockMap] !== blockNum) {
+        if (cache[blockMap] === null || cache[blockMap] !== mainMemoryMap[i]) {
             cacheMiss += 1;
         } else {
             cacheHit += 1;
